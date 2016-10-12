@@ -1,50 +1,32 @@
-# Local and remote port VLAN check for EXOS
+# Watch
+Watch is a simple script that repeats a CLI command so that its output can be watched without having to constantly run the command
 
 ## Description
+This will repeat a CLI command for a user defined number of times (-c) with a user defined interval between the commands (-i) seconds. 
+Default Count: 3
+Default Interval: 5 seconds
 
-This Script uses EDP to check if the local and remote port have the same vlans added to the ports.  EDP needs to be enabled on both sides of the link for the script to work.
+Optionally you can enable a diff of numerical values (-d) which will replace numerical values that have changed between command iterations with a "+" followed by the difference between the two values.
 
-## Files
-
-* [edp_and_port_vlan_check.py](edp_and_port_vlan_check.py)
+### Files
+* [watch.py](watch.py)
 * [README.md](README.md)
 
-
 ### Requirements
-* Firmware: ExtremeXOS(TM) 15.6
-* This script was tested on 15.6 and older.
+ExtremeXOS 15.6+
 
-### Features
-* This Script Checkes local and remote port vlan configurations to check to see if they Match. 
-* The script does not check to see if the vlans are tagged or untagged on the port.
- 
+### Usage
+run script watch.py [-h] [-c COUNT] [-i INTERVAL] [-d] command
 
-### How to use
-* Run the script on a switch with EXOS 15.6 and higher.
-
-##### Switch script example
-
+### Example
 ```
-Switch# run script edp_and_port_vlan_check.py
-What port would you like to check?: 5
-
-
-EDP VLAN data: ['ISC_MLAG', 'V10_C0', 'V11_C1', 'V12_C2']
-VLANS on port: ['ISC_MLAG', 'V10_C0', 'V11_C1', 'V12_C2']
-
-They match!!!
-Switch#
-Switch# conf "ISC_mlag" del port 5
-Switch# run script edp_and_port_vlan_check.py
-What port would you like to check?: 5
-
-
-EDP VLAN data: ['ISC_MLAG', 'V10_C0', 'V11_C1', 'V12_C2']
-VLANS on port: ['V10_C0', 'V11_C1', 'V12_C2']
-
-No Match!!!
-Switch#
+run script watch.py -i 5 "show ospf neighbor"
 ```
+
+### Notes
+Note that any CLI commands must be enclosed in double quotes, due to how the EXOS CLI handles string arguments.
+
+
 
 ## License
 Copyright© 2015, Extreme Networks

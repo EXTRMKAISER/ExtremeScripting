@@ -1,53 +1,39 @@
-# Local and remote port VLAN check for EXOS
+# Unsaved Config Diff
 
-## Description
+### Description
+This script will compare the currently running config with the saved config, and show the changes.
 
-This Script uses EDP to check if the local and remote port have the same vlans added to the ports.  EDP needs to be enabled on both sides of the link for the script to work.
+**This script will clear the CLI dirty bit. The config is not saved.**
 
-## Files
-
-* [edp_and_port_vlan_check.py](edp_and_port_vlan_check.py)
+### Files
+* [conf_diff.py](conf_diff.py)
 * [README.md](README.md)
 
 
 ### Requirements
-* Firmware: ExtremeXOS(TM) 15.6
-* This script was tested on 15.6 and older.
-
-### Features
-* This Script Checkes local and remote port vlan configurations to check to see if they Match. 
-* The script does not check to see if the vlans are tagged or untagged on the port.
+Firmware: ExtremeXOS(TM)
  
 
 ### How to use
-* Run the script on a switch with EXOS 15.6 and higher.
+* ` run script conf_diff.py`
+* Lines that start with '-' are lines that are present in the saved config, and have been deleted from the running config.
+* Lines that start with '+' are lines that are not present in the saved config, and have been added to the running config.
 
-##### Switch script example
-
+## EXOS run example:
 ```
-Switch# run script edp_and_port_vlan_check.py
-What port would you like to check?: 5
+ * X450G2-48p-10G4.11 # run script conf_diff.py
+Comparing configurations, please wait...
 
+If line starts with '+', the command has been added since last save.
+If line starts with '-', the command was present in the last save, and has been deleted.
 
-EDP VLAN data: ['ISC_MLAG', 'V10_C0', 'V11_C1', 'V12_C2']
-VLANS on port: ['ISC_MLAG', 'V10_C0', 'V11_C1', 'V12_C2']
-
-They match!!!
-Switch#
-Switch# conf "ISC_mlag" del port 5
-Switch# run script edp_and_port_vlan_check.py
-What port would you like to check?: 5
-
-
-EDP VLAN data: ['ISC_MLAG', 'V10_C0', 'V11_C1', 'V12_C2']
-VLANS on port: ['V10_C0', 'V11_C1', 'V12_C2']
-
-No Match!!!
-Switch#
+Config changes:
++ disable port 1
+Note that this script has cleared the CLI dirty bit. The configuration has not been saved.
 ```
 
 ## License
-Copyright© 2015, Extreme Networks
+Copyright© 2016, Extreme Networks
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,

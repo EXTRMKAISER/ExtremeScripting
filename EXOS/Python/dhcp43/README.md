@@ -1,53 +1,30 @@
-# Local and remote port VLAN check for EXOS
+# dhcp43
+dhcp43 is a script that will take generate the command needed to configure an EXOS switch's built in DHCP server to provide DHCP option 43 for EXOS ZTP automated config download.
 
 ## Description
+This script takes arguments of filenames or URLS, and optionally a server IP address and a VLAN.
 
-This Script uses EDP to check if the local and remote port have the same vlans added to the ports.  EDP needs to be enabled on both sides of the link for the script to work.
+If the VLAN is provided, the script will configure the DHCP options on the specified vlan. Otherwise, it will simply provide the command needed to make this configuration change (without the VLAN specified)
 
-## Files
-
-* [edp_and_port_vlan_check.py](edp_and_port_vlan_check.py)
+### Files
+* [dhcp43.py](dhcp43.py)
 * [README.md](README.md)
 
-
 ### Requirements
-* Firmware: ExtremeXOS(TM) 15.6
-* This script was tested on 15.6 and older.
+ExtremeXOS 15.6+
 
-### Features
-* This Script Checkes local and remote port vlan configurations to check to see if they Match. 
-* The script does not check to see if the vlans are tagged or untagged on the port.
- 
+### Usage
+run script dhcp43.py [-h] [-s SERVER_ADDRESS] [-v VLAN_NAME] files [files ...]
 
-### How to use
-* Run the script on a switch with EXOS 15.6 and higher.
-
-##### Switch script example
-
+### Example
 ```
-Switch# run script edp_and_port_vlan_check.py
-What port would you like to check?: 5
-
-
-EDP VLAN data: ['ISC_MLAG', 'V10_C0', 'V11_C1', 'V12_C2']
-VLANS on port: ['ISC_MLAG', 'V10_C0', 'V11_C1', 'V12_C2']
-
-They match!!!
-Switch#
-Switch# conf "ISC_mlag" del port 5
-Switch# run script edp_and_port_vlan_check.py
-What port would you like to check?: 5
-
-
-EDP VLAN data: ['ISC_MLAG', 'V10_C0', 'V11_C1', 'V12_C2']
-VLANS on port: ['V10_C0', 'V11_C1', 'V12_C2']
-
-No Match!!!
-Switch#
+X620-16x.1 # run script dhcp43.py -s 192.168.1.101 config.xsf summitX-21.1.2.14.xos
+configure vlan <vlan_name> dhcp-options code 43 hex 64:04:c0:a8:01:65:65:0a:63:6f:6e:66:69:67:2e:78:73:66:65:15:73:75:6d:6d:69:74:58:2d:32:31:2e:31:2e:32:2e:31:34:2e:78:6f:73
 ```
+
 
 ## License
-Copyright© 2015, Extreme Networks
+Copyright© 2016, Extreme Networks
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,

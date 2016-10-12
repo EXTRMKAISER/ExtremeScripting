@@ -1,54 +1,23 @@
-# Local and remote port VLAN check for EXOS
+# Disable a Port on a Link Down Event
 
 ## Description
+This will set up a UPM script to watch the log for link down events, then disable the port administratively.
 
-This Script uses EDP to check if the local and remote port have the same vlans added to the ports.  EDP needs to be enabled on both sides of the link for the script to work.
-
-## Files
-
-* [edp_and_port_vlan_check.py](edp_and_port_vlan_check.py)
+###Files
 * [README.md](README.md)
+* [disable_port.xsf](disable_port.xsf)
+
 
 
 ### Requirements
-* Firmware: ExtremeXOS(TM) 15.6
-* This script was tested on 15.6 and older.
-
-### Features
-* This Script Checkes local and remote port vlan configurations to check to see if they Match. 
-* The script does not check to see if the vlans are tagged or untagged on the port.
- 
-
-### How to use
-* Run the script on a switch with EXOS 15.6 and higher.
-
-##### Switch script example
-
-```
-Switch# run script edp_and_port_vlan_check.py
-What port would you like to check?: 5
+* Firmware: ExtremeXOS(TM) 15.3 and newer
+* Platform(s): ExtremeXOS(TM) based Extreme Networks switches with PoE support
+* License: Edge or higher (required for UPM support)
 
 
-EDP VLAN data: ['ISC_MLAG', 'V10_C0', 'V11_C1', 'V12_C2']
-VLANS on port: ['ISC_MLAG', 'V10_C0', 'V11_C1', 'V12_C2']
-
-They match!!!
-Switch#
-Switch# conf "ISC_mlag" del port 5
-Switch# run script edp_and_port_vlan_check.py
-What port would you like to check?: 5
-
-
-EDP VLAN data: ['ISC_MLAG', 'V10_C0', 'V11_C1', 'V12_C2']
-VLANS on port: ['V10_C0', 'V11_C1', 'V12_C2']
-
-No Match!!!
-Switch#
-```
 
 ## License
-Copyright© 2015, Extreme Networks
-All rights reserved.
+Copyright© 2015, Extreme Networks.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
